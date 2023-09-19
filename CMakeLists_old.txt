@@ -1,0 +1,26 @@
+cmake_minimum_required(VERSION 3.18 FATAL_ERROR)
+project(toy_flashsim)
+
+find_package(Torch REQUIRED)
+find_package(OpenCV REQUIRED)
+
+# If the package has been found, several variables will be set, you can find the full list with descriptions in the OpenCVConfig.cmake file.
+# Print some messages showing some of them
+message(STATUS "OpenCV library status:")
+message(STATUS "    version: ${OpenCV_VERSION}")
+message(STATUS "    libraries: ${OpenCV_LIBS}")
+message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
+# Enable C++11
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+set(OpenCV_DIR "/usr/include/opencv4/opencv2")
+
+add_executable(toy_flashsim toy_flashsim.cpp)
+
+target_include_directories(toy_flashsim PRIVATE ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(toy_flashsim ${TORCH_LIBRARIES} ${OpenCV_LIBS})
+
+set_property(TARGET toy_flashsim PROPERTY CXX_STANDARD 17)
+
